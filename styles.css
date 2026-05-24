@@ -1,0 +1,1031 @@
+/* ==========================================================================
+   1. VARIABLES Y CONFIGURACIÓN BASE
+   ========================================================================== */
+:root {
+    --font-primary: 'Poppins', sans-serif;
+    --font-accent: 'Cinzel', serif;
+    --transition-smooth: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+    
+    /* Configuración por defecto: Modo Oscuro + Sabor TUSA */
+    --bg-main: #0a0a0a;
+    --bg-card: #121212;
+    --bg-nav: rgba(10, 10, 10, 0.75);
+    --text-main: #ffffff;
+    --text-muted: #bcbcbc;
+    --border-color: rgba(255, 255, 255, 0.08);
+    
+    /* Paleta TUSA (Magenta / Rosados Premium) */
+    --primary: #d11d5b;
+    --primary-gradient: linear-gradient(135deg, #e91e63, #880e4f);
+    --accent-glow: rgba(209, 29, 91, 0.3);
+}
+
+/* Variación de Sabor: MÁNCORA */
+body[data-product="mancora"] {
+    --primary: #ff9800;
+    --primary-gradient: linear-gradient(135deg, #ffb300, #e65100);
+    --accent-glow: rgba(255, 152, 0, 0.3);
+}
+
+/* ==========================================================================
+   VARIACIONES DE MODO CLARO (LIGHT MODE)
+   ========================================================================== */
+body.light-mode {
+    --bg-main: #f9f9f9;
+    --bg-card: #ffffff;
+    --bg-nav: rgba(249, 249, 249, 0.85);
+    --text-main: #111111;
+    --text-muted: #555555;
+    --border-color: rgba(0, 0, 0, 0.08);
+}
+
+/* Ajustes específicos de contrastes en Modo Claro */
+body.light-mode .step-process__circle {
+    background: var(--bg-card);
+    border: 2px solid var(--primary);
+}
+
+/* ==========================================================================
+   2. RESETS Y ESTILOS GLOBALES
+   ========================================================================== */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+    font-size: 16px;
+}
+
+body {
+    font-family: var(--font-primary);
+    background-color: var(--bg-main);
+    color: var(--text-main);
+    overflow-x: hidden;
+    transition: var(--transition-smooth);
+}
+
+img {
+    max-width: 100%;
+    height: auto;
+}
+
+/* ==========================================================================
+   3. COMPONENTES: COMPARTIDOS (HEADER, FOOTER, BOTONES)
+   ========================================================================== */
+.header {
+    width: 100%;
+    height: 90px;
+    padding: 0 5%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    z-index: 1000;
+    backdrop-filter: blur(15px);
+    background: var(--bg-nav);
+    border-bottom: 1px solid var(--border-color);
+    transition: var(--transition-smooth);
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    text-decoration: none;
+}
+
+.logo__img {
+    width: 55px;
+    height: 55px;
+    border-radius: 50%;
+    border: 2px solid var(--primary);
+    background: #fff;
+    padding: 2px;
+}
+
+.logo__text-container {
+    display: flex;
+    flex-direction: column;
+}
+
+.logo__brand {
+    font-family: var(--font-accent);
+    font-size: 1.1rem;
+    font-weight: 700;
+    letter-spacing: 2px;
+    color: var(--text-main);
+}
+
+.logo__tagline {
+    font-size: 0.75rem;
+    color: var(--primary);
+    letter-spacing: 4px;
+    margin-top: -2px;
+}
+
+.navbar {
+    display: flex;
+    gap: 35px;
+}
+
+.navbar__link {
+    color: var(--text-main);
+    text-decoration: none;
+    font-weight: 500;
+    font-size: 0.95rem;
+    transition: var(--transition-smooth);
+    position: relative;
+}
+
+.navbar__link:hover,
+.navbar__link--active {
+    color: var(--primary);
+}
+
+.header__actions {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.theme-toggle {
+    background: var(--bg-card);
+    border: 1px solid var(--border-color);
+    color: var(--text-main);
+    padding: 10px 20px;
+    border-radius: 30px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-weight: 600;
+    font-size: 0.85rem;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+    transition: var(--transition-smooth);
+}
+
+.theme-toggle:hover {
+    transform: translateY(-2px);
+    border-color: var(--primary);
+}
+
+.menu-btn {
+    display: none;
+    font-size: 1.5rem;
+    cursor: pointer;
+    color: var(--text-main);
+}
+
+/* Botones universales */
+.btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    padding: 14px 32px;
+    border-radius: 50px;
+    text-decoration: none;
+    font-weight: 600;
+    transition: var(--transition-smooth);
+    cursor: pointer;
+    border: none;
+}
+
+.btn--primary {
+    background: var(--primary-gradient);
+    color: #ffffff;
+    box-shadow: 0 8px 25px var(--accent-glow);
+}
+
+.btn--primary:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 12px 30px var(--accent-glow);
+}
+
+.btn--secondary {
+    background: transparent;
+    color: var(--text-main);
+    border: 2px solid var(--text-main);
+}
+
+.btn--secondary:hover {
+    background: var(--text-main);
+    color: var(--bg-main);
+}
+
+/* ==========================================================================
+   4. ESTRUCTURA Y UI DE LA LANDING DE PRODUCTO (PLANTILLA MAESTRA)
+   ========================================================================== */
+.main-content {
+    padding-top: 90px;
+}
+
+/* ==========================================================================
+   REPARACIÓN DE PORTADAS (HERO & HERO-PRODUCT) - DOS COLUMNAS / RESPONSIVE
+   ========================================================================== */
+
+/* Contenedor base de la portada de Inicio */
+/* HERO PRINCIPAL & PORTADAS DE PRODUCTOS UNIFICADAS */
+.hero {
+  width: 100%;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 130px 8% 60px 8%;
+  position: relative;
+  overflow: hidden;
+  background: #0a0a0a;
+}
+
+.hero-product {
+  width: 100%;
+  min-height: 85vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 140px 8% 60px 8%;
+  position: relative;
+  overflow: hidden;
+  background: #0a0a0a;
+}
+
+/* Grillas simétricas de 2 columnas para PC/Laptop */
+.hero-content, 
+.hero-product__grid {
+  display: grid;
+  grid-template-columns: 1.2fr 0.8fr;
+  gap: 50px;
+  width: 100%;
+  max-width: 1200px;
+  align-items: center;
+}
+
+/* Columnas de Texto */
+.hero-text, 
+.hero-product__content {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  text-align: left;
+  z-index: 2;
+}
+
+.hero-text h1, 
+.hero-product__title {
+  font-family: 'Cinzel', serif;
+  font-size: 3.8rem;
+  line-height: 1.15;
+  margin-bottom: 20px;
+}
+
+.hero-text p, 
+.hero-product__description {
+  font-size: 1.05rem;
+  line-height: 1.7;
+  color: #cfcfcf;
+  margin-bottom: 35px;
+  max-width: 580px;
+}
+
+.hero-buttons, 
+.hero-product__actions {
+  display: flex;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+/* Columnas de Imagen */
+.hero-img, 
+.hero-product__image-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  z-index: 2;
+}
+
+/* Ajuste estricto para evitar el desborde gigante de las botellas */
+.hero-img img, 
+.hero-product__image-container img {
+  width: 100%;
+  max-width: 400px;
+  height: auto;
+  object-fit: contain;
+  filter: drop-shadow(0 15px 30px rgba(0,0,0,0.7));
+  animation: floatProduct 4s ease-in-out infinite;
+}
+
+@keyframes floatProduct {
+  0% { transform: translateY(0px); }
+  50% { transform: translateY(-12px); }
+  100% { transform: translateY(0px); }
+}
+
+/* --- SECCIÓN INGREDIENTES Y BENEFICIOS --- */
+.details-section {
+    padding: 100px 8%;
+    background-color: var(--bg-main);
+}
+
+.details-section__grid {
+    display: grid;
+    grid-template-columns: 1.2fr 0.8fr;
+    gap: 80px;
+}
+
+.details-section__title {
+    font-family: var(--font-accent);
+    font-size: 2rem;
+    margin-bottom: 35px;
+    position: relative;
+    padding-bottom: 15px;
+}
+
+.details-section__title::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 60px;
+    height: 3px;
+    background: var(--primary);
+}
+
+/* Grilla de Ingredientes */
+/* Contenedor de la cuadrícula de ingredientes */
+.ingredients-grid {
+  display: grid;
+  /* Define que las tarjetas tengan un tamaño mínimo de 220px y máximo proporcional uniforme */
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 25px;
+  width: 100%;
+}
+
+/* Tarjeta individual */
+.ingredient-card {
+  background: #111; /* Color base oscuro */
+  border-radius: 20px;
+  padding: 30px 20px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  transition: 0.4s ease;
+  min-height: 180px; /* Forzar a que todas tengan exactamente el mismo alto mínimo */
+  border: 1px solid rgba(255, 255, 255, 0.05); /* Borde sutil para que no se pierda en el fondo */
+}
+
+.ingredient-card:hover {
+  transform: translateY(-5px);
+  border-color: var(--primary, #ffb000); /* Si no encuentra --primary, usa el dorado por defecto */
+}
+
+/* Iconos dentro de las tarjetas */
+.ingredient-card__icon {
+  font-size: 2rem;
+  margin-bottom: 15px;
+  display: block;
+  color: #ffb000; /* Color por defecto para que no salga negro u oculto */
+}
+
+/* Forzamos a que el título sea blanco en el modo oscuro */
+.ingredient-card__name {
+  font-size: 1rem;
+  font-weight: 600;
+  margin-bottom: 5px;
+  color: #ffffff; 
+}
+
+/* Ajuste del texto secundario */
+.ingredient-card__desc {
+  font-size: 0.8rem;
+  color: var(--text-muted, #b0b0b0); /* Si no encuentra --text-muted, usa un gris claro legible */
+}
+
+/* ===================================================
+   SOPORTE PARA MODO CLARO (Añade esto al final de tu CSS)
+   =================================================== */
+body.light-mode .ingredient-card {
+  background: #ffffff;
+  border: 1px solid rgba(0, 0, 0, 0.06);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
+}
+
+body.light-mode .ingredient-card__name {
+  color: #111111; /* El título cambia a negro en modo claro */
+}
+
+body.light-mode .ingredient-card__desc {
+  color: #666666; /* La descripción cambia a un gris oscuro legible */
+}
+/* Lista de Beneficios */
+.benefits-list {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.benefit-item {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    background: var(--bg-card);
+    padding: 18px 25px;
+    border-radius: 15px;
+    border-left: 4px solid var(--primary);
+    box-shadow: 0 5px 15px rgba(0,0,0,0.02);
+}
+
+.benefit-item__icon {
+    color: var(--primary);
+    font-size: 1.2rem;
+}
+
+.benefit-item__text {
+    font-weight: 500;
+    font-size: 1rem;
+}
+
+/* --- SECCIÓN PROCESO (LÍNEA DE TIEMPO HORIZONTAL) --- */
+.process-section {
+    padding: 100px 5%;
+    background: var(--bg-card);
+    text-align: center;
+}
+
+.process-section__subtitle {
+    color: var(--primary);
+    font-weight: 600;
+    letter-spacing: 3px;
+    font-size: 0.9rem;
+}
+
+.process-section__title {
+    font-family: var(--font-accent);
+    font-size: 2.5rem;
+    margin-top: 10px;
+    margin-bottom: 60px;
+}
+
+.timeline {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    gap: 20px;
+    position: relative;
+}
+
+/* Línea conectora trasera desktop */
+.timeline::before {
+    content: '';
+    position: absolute;
+    top: 45px;
+    left: 5%;
+    width: 90%;
+    height: 2px;
+    background: var(--border-color);
+    z-index: 1;
+}
+
+.step-process {
+    position: relative;
+    z-index: 2;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    opacity: 0;
+    transform: translateY(30px);
+    transition: all 0.6s ease;
+}
+
+.step-process.show {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.step-process__circle {
+    width: 90px;
+    height: 90px;
+    border-radius: 50%;
+    background: var(--bg-main);
+    border: 2px solid var(--border-color);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 20px;
+    box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+    transition: var(--transition-smooth);
+}
+
+.step-process:hover .step-process__circle {
+    border-color: var(--primary);
+    transform: scale(1.1);
+    box-shadow: 0 10px 25px var(--accent-glow);
+}
+
+.step-process__icon {
+    font-size: 1.8rem;
+    color: var(--primary);
+}
+
+.step-process__number {
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: var(--primary);
+    margin-bottom: 5px;
+}
+
+.step-process__name {
+    font-size: 1rem;
+    font-weight: 600;
+    margin-bottom: 8px;
+}
+
+.step-process__desc {
+    font-size: 0.8rem;
+    color: var(--text-muted);
+    padding: 0 10px;
+    line-height: 1.4;
+}
+
+/* --- CALL TO ACTION (CTA) BAR --- */
+.cta-banner {
+    padding: 80px 8%;
+    background: var(--bg-main);
+}
+
+.cta-banner__container {
+    background: var(--primary-gradient);
+    border-radius: 30px;
+    padding: 60px;
+    text-align: center;
+    box-shadow: 0 15px 40px var(--accent-glow);
+}
+
+.cta-banner__title {
+    font-family: var(--font-accent);
+    font-size: 2.8rem;
+    color: #ffffff;
+    margin-bottom: 15px;
+}
+
+.cta-banner__text {
+    font-size: 1.1rem;
+    color: rgba(255, 255, 255, 0.9);
+    margin-bottom: 35px;
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.btn--whatsapp {
+    background: #25d366;
+    color: white;
+    box-shadow: 0 8px 20px rgba(37, 211, 102, 0.3);
+}
+
+.btn--whatsapp:hover {
+    background: #20ba5a;
+    box-shadow: 0 12px 25px rgba(37, 211, 102, 0.5);
+}
+
+/* ==========================================================================
+   5. FOOTER UNIVERSAL
+   ========================================================================== */
+.footer {
+    padding: 60px 8% 30px 8%;
+    background: var(--bg-main);
+    border-top: 1px solid var(--border-color);
+    text-align: center;
+}
+
+.footer__logo-title {
+    font-family: var(--font-accent);
+    font-size: 1.6rem;
+    letter-spacing: 3px;
+    margin-bottom: 15px;
+}
+
+.footer__desc {
+    color: var(--text-muted);
+    max-width: 500px;
+    margin: 0 auto 30px auto;
+    font-size: 0.95rem;
+}
+
+.footer__socials {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    margin-bottom: 40px;
+}
+
+.footer__social-link {
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    background: var(--bg-card);
+    color: var(--text-main);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-decoration: none;
+    border: 1px solid var(--border-color);
+    transition: var(--transition-smooth);
+}
+
+.footer__social-link:hover {
+    background: var(--primary);
+    color: #fff;
+    transform: translateY(-4px);
+}
+
+.footer__copy {
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    border-top: 1px solid var(--border-color);
+    padding-top: 25px;
+}
+
+
+/* Ajustes específicos para pulir la Página de Inicio (Index) */
+.main-content {
+    overflow: hidden; /* Evita desbordamientos laterales raros como el de la captura */
+}
+
+/* Si deseas usar la imagen de los capibaras en el fondo de forma elegante y sutil sin romper el texto */
+body {
+    position: relative;
+}
+
+/* Corrección de padding extra para componentes reutilizados en el index */
+#productos .ingredient-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border-color);
+    transition: var(--transition-smooth);
+}
+
+/* ==========================================================================
+   VARIACIÓN EXCLUSIVA PARA LA PÁGINA DE INICIO (HOME NEUTRAL PREMIUM)
+   ========================================================================== */
+body[data-page="home"] {
+    /* Paleta Corporativa: Ámbar Dorado / Oro Orgánico Premium */
+    --primary: #c5a880; 
+    --primary-gradient: linear-gradient(135deg, #d4af37, #aa7c11);
+    --accent-glow: rgba(197, 168, 128, 0.25);
+}
+
+/* Ajuste de color para las tarjetas individuales de sabores dentro de la Home */
+body[data-page="home"] .product-card--mancora .btn--discover {
+    background: linear-gradient(135deg, #ffb300, #e65100) !important;
+    box-shadow: 0 4px 15px rgba(230, 81, 0, 0.3);
+}
+
+body[data-page="home"] .product-card--tusa .btn--discover {
+    background: linear-gradient(135deg, #e91e63, #880e4f) !important;
+    box-shadow: 0 4px 15px rgba(136, 14, 79, 0.3);
+}
+
+/* Evita que los botones de descubrir se deformen o pierdan el estilo premium */
+.btn--discover {
+    color: #ffffff !important;
+}
+
+
+
+
+/* ===================================================
+   ESTRUCTURA GLOBAL Y MÁRGENES RESPONSIVOS
+=================================================== */
+
+.details-section {
+  padding: 80px 5%; /* Margen lateral adaptable en pantallas medianas */
+  width: 100%;
+  display: flex;
+  justify-content: center; /* Centra el contenido en pantallas gigantes */
+}
+
+.details-container-row {
+  display: grid;
+  grid-template-columns: 1.3fr 1fr; /* Proporción equilibrada para las 2 columnas */
+  gap: 50px;
+  align-items: start;
+  width: 100%;
+  max-width: 1200px; /* ¡CLAVE! Evita que se estire infinitamente en monitores grandes */
+}
+
+/* Títulos de las columnas */
+.section-title-left {
+  margin-bottom: 30px;
+}
+
+.section-title-left span {
+  letter-spacing: 3px;
+  font-size: 0.85rem;
+  display: block;
+  margin-bottom: 5px;
+  font-weight: 600;
+}
+
+.section-title-left h2 {
+  font-size: 2.2rem;
+  font-family: 'Cinzel', serif;
+  line-height: 1.2;
+}
+
+
+
+
+/* Reducción del tamaño de tarjetas en la grilla para que entren perfecto en la columna */
+.ingredients-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  gap: 20px;
+  width: 100%;
+}
+
+.ingredient-card {
+  background: #111;
+  border-radius: 18px;
+  padding: 25px 15px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  transition: 0.4s ease;
+  min-height: 150px;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+/* Lista vertical estilizada para los beneficios */
+.benefits-list-vertical {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  width: 100%;
+}
+
+.benefit-row-item {
+  background: #111;
+  padding: 20px 25px;
+  border-radius: 15px;
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  border-left: 4px solid #ffb000; /* Detalle premium de línea de color de la marca */
+  border-top: 1px solid rgba(255, 255, 255, 0.02);
+  border-right: 1px solid rgba(255, 255, 255, 0.02);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.02);
+  transition: 0.3s ease;
+}
+
+.benefit-row-item:hover {
+  transform: translateX(5px);
+}
+
+.benefit-row-item i {
+  font-size: 1.4rem;
+  color: #ffb000;
+}
+
+.benefit-row-item p {
+  font-size: 1.05rem;
+  font-weight: 500;
+  color: #ffffff;
+}
+
+/* ===================================================
+   ADAPTACIÓN PARA MODO CLARO (LIGHT MODE)
+=================================================== */
+body.light-mode .ingredient-card,
+body.light-mode .benefit-row-item {
+  background: white;
+  border: 1px solid rgba(0, 0, 0, 0.06);
+}
+
+body.light-mode .benefit-row-item {
+  border-left: 4px solid #ffb000; /* Mantiene la barra de color */
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.03);
+}
+
+body.light-mode .benefit-row-item p {
+  color: #111111;
+}
+
+body.light-mode .section-title-left h2 {
+  color: #111111;
+}
+
+
+/* ===================================================
+   VINCULACIÓN ESPECÍFICA PARA EL TEMA DE TUSA
+=================================================== */
+
+/* Subtítulos pequeños */
+.tusa-theme .section-title-left span {
+  color: #e11d48; /* Tono magenta/fresa premium */
+}
+
+/* Iconos de ingredientes e iconos de beneficios (fuerza el color fresa) */
+.tusa-theme .ingredient-card__icon,
+.tusa-theme .benefit-row-item i,
+.tusa-theme .benefit-row-item .fa-circle-check {
+  color: #e11d48 !important;
+}
+
+/* Líneas izquierdas de los bloques de beneficios */
+.tusa-theme .benefit-row-item {
+  border-left: 4px solid #e11d48 !important;
+}
+
+/* Efectos Hover interactivos (Tarjetas y Beneficios) */
+.tusa-theme .ingredient-card:hover {
+  transform: translateY(-5px);
+  border-color: #e11d48;
+  box-shadow: 0 10px 20px rgba(225, 29, 72, 0.1);
+}
+
+.tusa-theme .benefit-row-item:hover {
+  transform: translateX(5px);
+  box-shadow: 0 8px 20px rgba(225, 29, 72, 0.15) !important;
+}
+
+/* ===================================================
+   SOPORTE DE MODO CLARO EXCLUSIVO PARA TUSA
+=================================================== */
+body.light-mode .tusa-theme .ingredient-card,
+body.light-mode .tusa-theme .benefit-row-item {
+  background: white;
+  border: 1px solid rgba(0, 0, 0, 0.06);
+}
+
+body.light-mode .tusa-theme .benefit-row-item {
+  border-left: 4px solid #e11d48 !important;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.03);
+}
+
+/* ==========================================================================
+   6. RESPONSIVE DESIGN (MEDIA QUERIES UNIFICADAS)
+   ========================================================================== */
+
+/* --- TABLETS Y LAPTOPS PEQUEÑAS (Menos de 1024px) --- */
+@media (max-width: 1024px) {
+    /* Estilos base existentes */
+    .timeline {
+        grid-template-columns: repeat(3, 1fr);
+        gap: 40px 20px;
+    }
+    .timeline::before {
+        display: none; /* Quitamos línea horizontal en tablet/mobile */
+    }
+    .details-section__grid {
+        grid-template-columns: 1fr;
+        gap: 50px;
+    }
+
+    /* Ajustes unificados para la sección de dos columnas */
+    .details-section {
+        padding: 60px 6%;
+    }
+    .details-container-row {
+        gap: 40px;
+        grid-template-columns: 1.2fr 1fr; /* Mantiene dos columnas pero más compactas */
+    }
+    .section-title-left h2 {
+        font-size: 1.8rem;
+    }
+}
+
+/* --- CELULARES Y DISPOSITIVOS MÓVILES (Menos de 768px) --- */
+@media (max-width: 768px) {
+    .header { padding: 0 20px; }
+    .menu-btn { display: block; }
+    
+    .navbar {
+        position: absolute;
+        top: 90px;
+        left: -100%;
+        width: 100%;
+        height: calc(100vh - 90px);
+        background: var(--bg-card, #111);
+        flex-direction: column;
+        align-items: center;
+        padding-top: 60px;
+        gap: 40px;
+        transition: var(--transition-smooth, 0.5s);
+    }
+    
+    .navbar.active { left: 0; }
+    
+    /* MODIFICACIÓN CLAVE: Fuerza una sola columna vertical en celulares */
+    .hero, .hero-product {
+        padding: 120px 4% 50px 4%;
+        min-height: auto;
+    }
+
+    .hero-content, 
+    .hero-product__grid {
+        grid-template-columns: 1fr; /* Una encima de la otra */
+        gap: 35px;
+        text-align: center;
+    }
+    
+    .hero-text, 
+    .hero-product__content {
+        text-align: center;
+        align-items: center;
+    }
+    
+    .hero-text h1, 
+    .hero-product__title {
+        font-size: 2.3rem; /* Tamaño optimizado para smartphones */
+    }
+    
+    .hero-text p, 
+    .hero-product__description { 
+        font-size: 0.95rem;
+        margin: 0 auto 25px auto; 
+    }
+    
+    .hero-buttons, 
+    .hero-product__actions { 
+        justify-content: center; 
+    }
+    
+    /* En celulares, la botella se renderiza encima del texto */
+    .hero-img, 
+    .hero-product__image-container { 
+        order: -1; 
+    }
+    
+    .hero-img img, 
+    .hero-product__image-container img {
+        max-width: 260px; /* Tamaño ideal y controlado en teléfono */
+    }
+    
+    .ingredients-grid { grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); }
+    .timeline { grid-template-columns: 1fr; gap: 40px; }
+    
+    .cta-banner__container { padding: 40px 20px; }
+    .cta-banner__title { font-size: 2rem; }
+
+
+    /* ===================================================
+       AJUSTES DE LA SECCIÓN DE INGREDIENTES Y BENEFICIOS
+       =================================================== */
+    .details-section {
+        padding: 50px 4%;
+    }
+    .details-container-row {
+        grid-template-columns: 1fr; /* ¡Pasa a una sola columna vertical! */
+        gap: 45px;
+    }
+    .section-title-left {
+        text-align: center; /* Centra títulos para pantallas táctiles */
+        margin-bottom: 25px;
+    }
+    .ingredients-grid {
+        /* Fuerza a que salgan 2 tarjetas por fila de forma responsiva */
+        grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); 
+        gap: 15px;
+    }
+    .ingredient-card {
+        padding: 20px 10px;
+        min-height: 130px;
+    }
+    .benefit-row-item {
+        padding: 15px 20px;
+        gap: 15px;
+    }
+}
+
+
+
+
+
+/* ===================================================
+   SOPORTE DE MODO CLARO PARA LAS PORTADAS (HERO)
+=================================================== */
+
+/* Cambia los fondos, títulos y descripciones a oscuro en modo claro */
+body.light-mode .hero,
+body.light-mode .hero-product {
+  background: #f9f9f9; /* Un fondo claro premium para las portadas */
+}
+
+body.light-mode .hero-text h1,
+body.light-mode .hero-product__title {
+  color: #111111 !important; /* El título pasa a negro para que resalte perfectamente */
+}
+
+body.light-mode .hero-text p,
+body.light-mode .hero-product__description {
+  color: #444444 !important; /* La descripción pasa a un gris oscuro muy legible */
+}
